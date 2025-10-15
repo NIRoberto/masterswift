@@ -7,9 +7,23 @@
 
 import SwiftUI
 import SwiftData
+import Firebase
+import FirebaseFirestore
 
 @main
 struct MasterSwiftApp: App {
+    
+    init() {
+        FirebaseApp.configure()
+        
+        // Enable offline persistence
+        let settings = FirestoreSettings()
+        settings.isPersistenceEnabled = true
+        Firestore.firestore().settings = settings
+        
+        print("Firebase configured with Firestore!")
+    }
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -25,7 +39,7 @@ struct MasterSwiftApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
         .modelContainer(sharedModelContainer)
     }
